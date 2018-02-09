@@ -81,12 +81,11 @@ def get_trending(id):
     articles = box.find_elements_by_class_name("_5my2")
     count = 1
     for article in articles:
-        title = article.find_element_by_class_name('_5v0s')
-        description = article.find_element_by_class_name('_3-9y')
-        source = article.find_element_by_class_name('_1oic')
-        print("Article", count, title.text, description.text, source.text[1:])
+        title = article.find_element_by_class_name("_5v0s")
+        description = article.find_element_by_class_name("_3-9y")
+        source = article.find_element_by_class_name("_1oic")
+        link = article.find_element_by_class_name("_4qzh").get_attribute("href")
         count += 1
-    print("-----END OF SECTION------")
 
 if __name__ == "__main__":
     driver = init_driver()
