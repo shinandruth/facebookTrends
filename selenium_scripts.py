@@ -1,7 +1,8 @@
 # LIBRARIES USED:
-# SELENIUM, BEAUTIFUL SOUP, URLLIB2
+# SELENIUM
 
 import time
+import csv
 
 from urllib.request import urlopen
 
@@ -11,19 +12,12 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.common.exceptions import TimeoutException
 
-from bs4 import BeautifulSoup
-
-
 link = "http://www.facebook.com"
 response = urlopen("http://www.facebook.com")
 page_source = response.read()
 
 fb_username = "computational.journalism.lab@gmail.com"
 fb_password = "D66bkPphJ8D3bVzq"
-
-def init_beautifulSoup():
-    soup = BeautifulSoup(page_source, 'html.parser')
-    return soup
 
 def init_driver():
     driver = webdriver.Firefox()
@@ -54,11 +48,14 @@ def see_more_btn():
 def click_icons(icon_ids):
     icons = driver.find_elements_by_class_name("_1o7n")
     index =  0
+    list_of_categories = []
     for icon in icons:
+        data = [[] for _ in range(4)]
         icon.click()
-        get_trending(icon_ids[index])
-        #time.sleep(3)
+        list_of_categories.append(get_trending(icon_ids[index], data))
+        time.sleep(3)
         index += 1
+    return list_of_categories
 
 def load_icon_html():
     WebDriverWait(driver, 100).until(lambda driver: driver.find_element_by_class_name("_1o7n"))
@@ -74,7 +71,7 @@ def get_icon_id():
         ids.append(c.get_attribute("id"))
     return ids
 
-def get_trending(id):
+def get_trending(id, list_of_list):
     WebDriverWait(driver, 100).until(lambda driver: driver.find_element_by_class_name("_5myl"))
     current = driver.find_element_by_id(id)
     box = current.find_element_by_class_name("_5myl")
@@ -86,13 +83,23 @@ def get_trending(id):
         source = article.find_element_by_class_name("_1oic")
         link = article.find_element_by_class_name("_4qzh").get_attribute("href")
         count += 1
+        list_of_list[0].append(title.text)
+        list_of_list[1].append(description.text)
+        list_of_list[2].append(source.text[1:])
+        list_of_list[3].append(link)
+    return list_of_list
+
+
+# open a csv file with append, so old data will not be erased
+# with open(‘facebook_trends.csv’, ‘a’) as csv_file:
+#  writer = csv.writer(csv_file)
+#  writer.writerow([name, price, datetime.now()])
 
 if __name__ == "__main__":
     driver = init_driver()
-    #soup = init_beautifulSoup()
     log_in(driver, fb_username, fb_password)
     load_icon_html()
     icon_ids = get_icon_id()
-    click_icons(icon_ids)
+    print(click_icons(icon_ids))
     #time.sleep(5)
     #driver.quit()
