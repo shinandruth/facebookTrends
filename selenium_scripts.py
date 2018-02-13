@@ -48,14 +48,15 @@ def see_more_btn():
 def click_icons(icon_ids):
     icons = driver.find_elements_by_class_name("_1o7n")
     index =  0
-    list_of_categories = []
+    outer_list = []
     for icon in icons:
-        data = [[] for _ in range(4)]
+        #data = [[] for _ in range(8)]
         icon.click()
-        list_of_categories.append(get_trending(icon_ids[index], data))
+        catergory = icon_name(index)
+        get_trending(icon_ids[index], outer_list, catergory)
         time.sleep(3)
         index += 1
-    return list_of_categories
+    return outer_list
 
 def load_icon_html():
     WebDriverWait(driver, 100).until(lambda driver: driver.find_element_by_class_name("_1o7n"))
@@ -71,24 +72,44 @@ def get_icon_id():
         ids.append(c.get_attribute("id"))
     return ids
 
-def get_trending(id, list_of_list):
+def icon_name(index):
+    if index == 0:
+        return "Top Trends"
+    elif index == 1:
+        return "Politics"
+    elif index == 2:
+        return "Science and Technology"
+    elif index == 3:
+        return "Sports"
+    elif index == 4:
+        return "Entertainment"
+    else:
+        return "Error: Could not find icon name"
+
+def get_trending(id, outer_list, catergory):
     WebDriverWait(driver, 100).until(lambda driver: driver.find_element_by_class_name("_5myl"))
     current = driver.find_element_by_id(id)
     box = current.find_element_by_class_name("_5myl")
     articles = box.find_elements_by_class_name("_5my2")
     count = 1
     for article in articles:
+        temp_list = []
         title = article.find_element_by_class_name("_5v0s")
         description = article.find_element_by_class_name("_3-9y")
         source = article.find_element_by_class_name("_1oic")
         link = article.find_element_by_class_name("_4qzh").get_attribute("href")
         count += 1
-        list_of_list[0].append(title.text)
-        list_of_list[1].append(description.text)
-        list_of_list[2].append(source.text[1:])
-        list_of_list[3].append(link)
-    return list_of_list
+        temp_list.append(catergory)
+        temp_list.append(title.text)
+        temp_list.append(description.text)
+        temp_list.append(source.text[2:])
+        temp_list.append(link)
+        outer_list.append(temp_list)
+    return outer_list
 
+#rank
+#scrapID
+#timestamp
 
 # open a csv file with append, so old data will not be erased
 # with open(‘facebook_trends.csv’, ‘a’) as csv_file:
@@ -100,6 +121,9 @@ if __name__ == "__main__":
     log_in(driver, fb_username, fb_password)
     load_icon_html()
     icon_ids = get_icon_id()
-    print(click_icons(icon_ids))
+    list_of_list = click_icons(icon_ids)
+    with open("output.csv", "w") as f:
+        writer = csv.writer(f)
+        writer.writerows(list_of_list)
     #time.sleep(5)
     #driver.quit()
