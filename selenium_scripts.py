@@ -3,6 +3,7 @@
 
 import time
 import csv
+import datetime
 
 from urllib.request import urlopen
 
@@ -50,10 +51,10 @@ def click_icons(icon_ids):
     index =  0
     outer_list = []
     for icon in icons:
-        #data = [[] for _ in range(8)]
         icon.click()
+        ts = datatime.datetime.now()
         catergory = icon_name(index)
-        get_trending(icon_ids[index], outer_list, catergory)
+        get_trending(icon_ids[index], outer_list, catergory,ts)
         time.sleep(3)
         index += 1
     return outer_list
@@ -62,8 +63,8 @@ def load_icon_html():
     WebDriverWait(driver, 100).until(lambda driver: driver.find_element_by_class_name("_1o7n"))
     icons = driver.find_elements_by_class_name("_1o7n")
     for icon in icons:
+        driver.wait.until(EC.presence_of_element_located((By.CLASS_NAME, "_1o7n")))
         icon.click()
-        time.sleep(3)
 
 def get_icon_id():
     ids =[]
@@ -86,7 +87,7 @@ def icon_name(index):
     else:
         return "Error: Could not find icon name"
 
-def get_trending(id, outer_list, catergory):
+def get_trending(id, outer_list, catergory, ts):
     WebDriverWait(driver, 100).until(lambda driver: driver.find_element_by_class_name("_5myl"))
     current = driver.find_element_by_id(id)
     box = current.find_element_by_class_name("_5myl")
@@ -98,18 +99,18 @@ def get_trending(id, outer_list, catergory):
         description = article.find_element_by_class_name("_3-9y")
         source = article.find_element_by_class_name("_1oic")
         link = article.find_element_by_class_name("_4qzh").get_attribute("href")
-        count += 1
         temp_list.append(catergory)
         temp_list.append(title.text)
         temp_list.append(description.text)
         temp_list.append(source.text[2:])
         temp_list.append(link)
+        temp_list.append(count)
+        temp_list.append(ts)
         outer_list.append(temp_list)
+        count += 1
     return outer_list
 
-#rank
 #scrapID
-#timestamp
 
 # open a csv file with append, so old data will not be erased
 # with open(‘facebook_trends.csv’, ‘a’) as csv_file:
@@ -122,7 +123,7 @@ if __name__ == "__main__":
     load_icon_html()
     icon_ids = get_icon_id()
     list_of_list = click_icons(icon_ids)
-    with open("output.csv", "w") as f:
+    with open("output.csv", "w", newline="") as f:
         writer = csv.writer(f)
         writer.writerows(list_of_list)
     #time.sleep(5)
