@@ -1,11 +1,15 @@
 # LIBRARIES USED:
-# SELENIUM
+# SELENIUM, APSCHEDULER
+# pip install apscheduler
+
+##fix scrapID problem & it running many times
 
 import time
 import csv
 import datetime
 
 from urllib.request import urlopen
+from apscheduler.schedulers.blocking import BlockingScheduler
 
 from selenium import webdriver
 from selenium.webdriver.common.by import By
@@ -19,6 +23,9 @@ page_source = response.read()
 
 fb_username = "computational.journalism.lab@gmail.com"
 fb_password = "D66bkPphJ8D3bVzq"
+filename = "tester1"
+per_unit = 20
+total_time = 1
 
 def init_driver():
     driver = webdriver.Firefox()
@@ -34,10 +41,8 @@ def log_in(driver, username, pw):
         email.send_keys(username)
         password.send_keys(pw)
         log_button.click()
-        icon = driver.wait.until(EC.presence_of_element_located((By.CLASS_NAME, "_2md")))
-        icon.click()
     except TimeoutException:
-        print("Username, password, home page icon, and/or log in button not found at", link)
+        print("Username, password, and/or log in button not found at", link)
 
 def see_more_btn():
     try:
@@ -52,10 +57,11 @@ def click_icons(icon_ids):
     outer_list = []
     for icon in icons:
         icon.click()
-        ts = datatime.datetime.now()
+        ts = datetime.datetime.now()
         catergory = icon_name(index)
-        get_trending(icon_ids[index], outer_list, catergory,ts)
-        time.sleep(3)
+        #print("index:", index)
+        #print("icon_id[index]:", icon_ids[index])
+        get_trending(icon_ids[index], outer_list, catergory, ts)
         index += 1
     return outer_list
 
@@ -105,26 +111,52 @@ def get_trending(id, outer_list, catergory, ts):
         temp_list.append(source.text[2:])
         temp_list.append(link)
         temp_list.append(count)
+        #temp_list.append(scrapID)
         temp_list.append(ts)
         outer_list.append(temp_list)
         count += 1
     return outer_list
 
-#scrapID
+def scrap_job():
+    #scrapID = scrap_id
+    icon = driver.wait.until(EC.presence_of_element_located((By.CLASS_NAME, "_2md")))
+    icon.click()
+    load_icon_html()
+    icon_ids = get_icon_id()
+    list_of_list = click_icons(icon_ids)
+    #scrapID += 1
+    with open(filename+".csv", "ab") as f:
+        wrtie = csv.writer(f)
+        writer.writerows(list_of_list)
 
+def tester():
+    print("hi there")
 # open a csv file with append, so old data will not be erased
 # with open(‘facebook_trends.csv’, ‘a’) as csv_file:
 #  writer = csv.writer(csv_file)
 #  writer.writerow([name, price, datetime.now()])
 
 if __name__ == "__main__":
+    #scrapID = 0
     driver = init_driver()
     log_in(driver, fb_username, fb_password)
-    load_icon_html()
-    icon_ids = get_icon_id()
-    list_of_list = click_icons(icon_ids)
-    with open("output.csv", "w", newline="") as f:
+    with open(filename+".csv", "w", newline="") as f:
         writer = csv.writer(f)
-        writer.writerows(list_of_list)
+        writer.writerow(["Type", "Title", "Description", "Source", "Unique Link", "Rank", "Scrap ID", "Timestamp"])
+        scheduler = BlockingScheduler()
+        stop_time = datetime.datetime.now() + datetime.timedelta(minutes=total_time)
+        scheduler.add_job(scrap_job, "interval", seconds=per_unit)
+        scheduler.start()
+        print("stop at:", stop_time)
+        while datetime.datetime.now() <= stop_time:
+            try:
+                print("now:", datetime.datetime.now())
+                time.sleep(1)
+            except(KeyboardInterrupt, SystemExit):
+                scheduler.shutdown()
+        scheduler.shutdown()
+
+
+
     #time.sleep(5)
     #driver.quit()
