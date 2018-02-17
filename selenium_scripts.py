@@ -27,7 +27,7 @@ fb_password = "D66bkPphJ8D3bVzq"
 filename = "tester1"
 per_unit = 10
 total_time = 0.5
-    
+
 def init_driver():
     driver = webdriver.Firefox()
     driver.wait = WebDriverWait(driver, 5)
@@ -146,7 +146,7 @@ if __name__ == "__main__":
     log_in(driver, fb_username, fb_password)
     with open(filename+".csv", "w", newline="") as f:
         writer = csv.writer(f)
-        writer.writerow(["Type", "Title", "Description", "Source", "Unique Link", "Rank", "Scrap ID", "Timestamp"])
+        writer.writerow(["Type", "Title", "Description", "Source", "Unique Link", "Rank", "Timestamp"]) #Scrap ID
         scheduler =BlockingScheduler()
         stop_time = datetime.datetime.now() + datetime.timedelta(minutes=total_time)
         scheduler.add_job(lambda: scrap_job(stop_time), "interval", seconds=per_unit, id='timed')
