@@ -2,7 +2,7 @@
 # SELENIUM, APSCHEDULER
 # pip install apscheduler
 
-##fix scrapID problem & it running many times
+##fix scrapID problem, currently problem & tiem stamp problem
 
 import time
 import csv
@@ -10,6 +10,7 @@ import datetime
 
 from urllib.request import urlopen
 from apscheduler.schedulers.blocking import BlockingScheduler
+from apscheduler.schedulers.asyncio import AsyncIOScheduler
 
 from selenium import webdriver
 from selenium.webdriver.common.by import By
@@ -24,8 +25,8 @@ page_source = response.read()
 fb_username = "computational.journalism.lab@gmail.com"
 fb_password = "D66bkPphJ8D3bVzq"
 filename = "tester1"
-per_unit = 20
-total_time = 1
+per_unit = 10
+total_time = 0.5
 
 def init_driver():
     driver = webdriver.Firefox()
@@ -59,8 +60,6 @@ def click_icons(icon_ids):
         icon.click()
         ts = datetime.datetime.now()
         catergory = icon_name(index)
-        #print("index:", index)
-        #print("icon_id[index]:", icon_ids[index])
         get_trending(icon_ids[index], outer_list, catergory, ts)
         index += 1
     return outer_list
@@ -117,24 +116,26 @@ def get_trending(id, outer_list, catergory, ts):
         count += 1
     return outer_list
 
-def scrap_job():
+def scrap_job(st):
     #scrapID = scrap_id
-    icon = driver.wait.until(EC.presence_of_element_located((By.CLASS_NAME, "_2md")))
-    icon.click()
-    load_icon_html()
-    icon_ids = get_icon_id()
-    list_of_list = click_icons(icon_ids)
-    #scrapID += 1
-    with open(filename+".csv", "ab") as f:
-        wrtie = csv.writer(f)
-        writer.writerows(list_of_list)
+    nt = datetime.datetime.now() - datetime.timedelta(seconds=1)
+    print("nt:", nt, "st:", st)
+    if nt > st:
+        scheduler.remove_job('timed')
+        scheduler.shutdown()
+    else:
+        icon = driver.wait.until(EC.presence_of_element_located((By.CLASS_NAME, "_2md")))
+        icon.click()
+        load_icon_html()
+        icon_ids = get_icon_id()
+        list_of_list = click_icons(icon_ids)
+        #scrapID += 1
+        with open(filename+".csv", "ab") as f:
+            wrtie = csv.writer(f)
+            writer.writerows(list_of_list)
 
 def tester():
     print("hi there")
-# open a csv file with append, so old data will not be erased
-# with open(‘facebook_trends.csv’, ‘a’) as csv_file:
-#  writer = csv.writer(csv_file)
-#  writer.writerow([name, price, datetime.now()])
 
 if __name__ == "__main__":
     #scrapID = 0
@@ -143,20 +144,13 @@ if __name__ == "__main__":
     with open(filename+".csv", "w", newline="") as f:
         writer = csv.writer(f)
         writer.writerow(["Type", "Title", "Description", "Source", "Unique Link", "Rank", "Scrap ID", "Timestamp"])
-        scheduler = BlockingScheduler()
+        scheduler =BlockingScheduler()
         stop_time = datetime.datetime.now() + datetime.timedelta(minutes=total_time)
-        scheduler.add_job(scrap_job, "interval", seconds=per_unit)
+        scheduler.add_job(lambda: scrap_job(stop_time), "interval", seconds=per_unit, id='timed')
         scheduler.start()
-        print("stop at:", stop_time)
-        while datetime.datetime.now() <= stop_time:
-            try:
-                print("now:", datetime.datetime.now())
-                time.sleep(1)
-            except(KeyboardInterrupt, SystemExit):
-                scheduler.shutdown()
-        scheduler.shutdown()
-
-
-
+        try:
+            time.sleep(1)
+        except (KeyboardInterrupt, Exception):
+            scheduler.shutdown()
     #time.sleep(5)
     #driver.quit()
