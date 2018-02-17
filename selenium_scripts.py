@@ -2,7 +2,7 @@
 # SELENIUM, APSCHEDULER
 # pip install apscheduler
 
-##fix scrapID problem, currently problem & tiem stamp problem
+##fix scrapID problem, currently problem
 
 import time
 import csv
@@ -10,7 +10,7 @@ import datetime
 
 from urllib.request import urlopen
 from apscheduler.schedulers.blocking import BlockingScheduler
-from apscheduler.schedulers.asyncio import AsyncIOScheduler
+from time import gmtime, strftime
 
 from selenium import webdriver
 from selenium.webdriver.common.by import By
@@ -93,6 +93,8 @@ def icon_name(index):
         return "Error: Could not find icon name"
 
 def get_trending(id, outer_list, catergory, ts):
+    t = ts.strftime("%c")
+
     WebDriverWait(driver, 100).until(lambda driver: driver.find_element_by_class_name("_5myl"))
     current = driver.find_element_by_id(id)
     box = current.find_element_by_class_name("_5myl")
@@ -111,9 +113,10 @@ def get_trending(id, outer_list, catergory, ts):
         temp_list.append(link)
         temp_list.append(count)
         #temp_list.append(scrapID)
-        temp_list.append(ts)
+        temp_list.append(t)
         outer_list.append(temp_list)
         count += 1
+    print(outer_list)
     return outer_list
 
 def scrap_job(st):
