@@ -27,7 +27,7 @@ fb_password = "D66bkPphJ8D3bVzq"
 filename = "tester1"
 per_unit = 10
 total_time = 0.5
-  
+   
 def init_driver():
     driver = webdriver.Firefox()
     driver.wait = WebDriverWait(driver, 5)
