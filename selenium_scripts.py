@@ -53,6 +53,7 @@ def see_more_btn():
         print("see more btn not found")
 
 def click_icons(icon_ids):
+    global scrapeID
     icons = driver.find_elements_by_class_name("_1o7n")
     index =  0
     outer_list = []
@@ -62,6 +63,7 @@ def click_icons(icon_ids):
         catergory = icon_name(index)
         get_trending(icon_ids[index], outer_list, catergory, ts)
         index += 1
+    scrapeID += 1
     return outer_list
 
 def load_icon_html():
@@ -94,7 +96,6 @@ def icon_name(index):
 
 def get_trending(id, outer_list, catergory, ts):
     t = ts.strftime("%c")
-
     WebDriverWait(driver, 100).until(lambda driver: driver.find_element_by_class_name("_5myl"))
     current = driver.find_element_by_id(id)
     box = current.find_element_by_class_name("_5myl")
@@ -112,18 +113,17 @@ def get_trending(id, outer_list, catergory, ts):
         temp_list.append(source.text[2:])
         temp_list.append(link)
         temp_list.append(count)
-        #temp_list.append(scrapID)
+        temp_list.append(scrapeID)
         temp_list.append(t)
         outer_list.append(temp_list)
         count += 1
-    print(outer_list)
     return outer_list
 
-def scrap_job(st):
-    #scrapID = scrap_id
-    nt = datetime.datetime.now() - datetime.timedelta(seconds=1)
-    print("nt:", nt, "st:", st)
-    if nt > st:
+def scrape_job(et):
+    #scrapeID = scrape_id
+    st = datetime.datetime.now() - datetime.timedelta(seconds=1)
+    print("st:", st, "et:", et)
+    if st > et:
         scheduler.remove_job('timed')
         scheduler.shutdown()
     else:
@@ -132,7 +132,6 @@ def scrap_job(st):
         load_icon_html()
         icon_ids = get_icon_id()
         list_of_list = click_icons(icon_ids)
-        #scrapID += 1
         with open(filename+".csv", "ab") as f:
             wrtie = csv.writer(f)
             writer.writerows(list_of_list)
@@ -141,15 +140,15 @@ def tester():
     print("hi there")
 
 if __name__ == "__main__":
-    #scrapID = 0
+    scrapeID = 0
     driver = init_driver()
     log_in(driver, fb_username, fb_password)
     with open(filename+".csv", "w", newline="") as f:
         writer = csv.writer(f)
-        writer.writerow(["Type", "Title", "Description", "Source", "Unique Link", "Rank", "Timestamp"]) #Scrap ID
+        writer.writerow(["Type", "Title", "Description", "Source", "Unique Link", "Rank", "Scrape Id", "Timestamp"]) #Scrap ID
         scheduler =BlockingScheduler()
-        stop_time = datetime.datetime.now() + datetime.timedelta(minutes=total_time)
-        scheduler.add_job(lambda: scrap_job(stop_time), "interval", seconds=per_unit, id='timed')
+        end_time = datetime.datetime.now() + datetime.timedelta(minutes=total_time)
+        scheduler.add_job(lambda: scrape_job(end_time), "interval", seconds=per_unit, id='timed')
         scheduler.start()
         try:
             time.sleep(1)
