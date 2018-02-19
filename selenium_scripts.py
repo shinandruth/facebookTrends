@@ -2,7 +2,7 @@
 # SELENIUM, APSCHEDULER
 # pip install apscheduler
 
-##fix scrapID problem, currently problem
+##fix currently problem
 
 import time
 import csv
@@ -24,9 +24,9 @@ page_source = response.read()
 
 fb_username = "computational.journalism.lab@gmail.com"
 fb_password = "D66bkPphJ8D3bVzq"
-filename = "tester1"
-per_unit = 10
-total_time = 0.5
+filename = "1hour_by_15min"
+per_unit = 15
+total_time = 60
 
 def init_driver():
     driver = webdriver.Firefox()
@@ -148,7 +148,7 @@ if __name__ == "__main__":
         writer.writerow(["Type", "Title", "Description", "Source", "Unique Link", "Rank", "Scrape Id", "Timestamp"]) #Scrap ID
         scheduler =BlockingScheduler()
         end_time = datetime.datetime.now() + datetime.timedelta(minutes=total_time)
-        scheduler.add_job(lambda: scrape_job(end_time), "interval", seconds=per_unit, id='timed')
+        scheduler.add_job(lambda: scrape_job(end_time), "interval", minutes=per_unit, id='timed')
         scheduler.start()
         try:
             time.sleep(1)
