@@ -24,12 +24,16 @@ page_source = response.read()
 
 fb_username = "computational.journalism.lab@gmail.com"
 fb_password = "D66bkPphJ8D3bVzq"
-filename = "1hour_by_15min"
+filename = "60m_by_15m1"
 per_unit = 15
 total_time = 60
 
 def init_driver():
-    driver = webdriver.Firefox()
+    firefox_profile = webdriver.FirefoxProfile()
+    firefox_profile.set_preference("browser.privatebrowsing.autostart", True)
+
+    driver = webdriver.Firefox(firefox_profile=firefox_profile)
+    # driver = webdriver.Firefox()
     driver.wait = WebDriverWait(driver, 5)
     return driver
 
@@ -132,7 +136,7 @@ def scrape_job(et):
         load_icon_html()
         icon_ids = get_icon_id()
         list_of_list = click_icons(icon_ids)
-        with open(filename+".csv", "ab") as f:
+        with open(filename+".csv", "a", encoding="utf-8") as f:
             wrtie = csv.writer(f)
             writer.writerows(list_of_list)
 
@@ -143,12 +147,13 @@ if __name__ == "__main__":
     scrapeID = 0
     driver = init_driver()
     log_in(driver, fb_username, fb_password)
-    with open(filename+".csv", "w", newline="") as f:
+    with open(filename+".csv", "w", newline="", encoding="utf-8") as f:
         writer = csv.writer(f)
-        writer.writerow(["Type", "Title", "Description", "Source", "Unique Link", "Rank", "Scrape Id", "Timestamp"]) #Scrap ID
-        scheduler =BlockingScheduler()
+        writer.writerow(["type", "title", "description", "source", "uniqueLink", "rank", "scrapeId", "timestamp"]) #Scrap ID
+        scheduler = BlockingScheduler()
         end_time = datetime.datetime.now() + datetime.timedelta(minutes=total_time)
-        scheduler.add_job(lambda: scrape_job(end_time), "interval", minutes=per_unit, id='timed')
+        scheduler.add_job(lambda: scrape_job(end_time), "interval", minutes=per_unit, id='timed', max_instances=3)
+        print("current:", datetime.datetime.now())
         scheduler.start()
         try:
             time.sleep(1)
