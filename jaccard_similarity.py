@@ -41,11 +41,12 @@ def create_input(avg):
 
 def plot():
     df = pd.read_csv(os.path.join("CSV//", filename+".csv"))
-    df.plot.bar(x='interval', y='avg')
-    ax = plt.plot(title="Average Jaccard Similarities")
-    plt.set_xlabel=("intervals (min)")
-    plt.set_ylabel=("avg jaccard similarity")
-    plt.show()
+    ax = df.plot.bar(title="jaccard similarity", x='interval', y='avg', legend=True)
+    fig = ax.get_figure()
+    #plt.show()
+    fig.savefig("..//selenium_env//graphs//jaccard.png")
+
+
 
 if __name__ == "__main__":
     avg = get_avg()
