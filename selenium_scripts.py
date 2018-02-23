@@ -31,7 +31,6 @@ total_time = 60
 def init_driver():
     firefox_profile = webdriver.FirefoxProfile()
     firefox_profile.set_preference("browser.privatebrowsing.autostart", True)
-
     driver = webdriver.Firefox(firefox_profile=firefox_profile)
     # driver = webdriver.Firefox()
     driver.wait = WebDriverWait(driver, 5)

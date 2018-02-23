@@ -1,8 +1,8 @@
 import csv
 import pandas as pd
 import os
-# import matplotlib.pyplot as plt
-
+import matplotlib.pyplot as plt
+import numpy as np
 from math import *
 
 interval = 5
@@ -17,7 +17,6 @@ def compute_jaccard(user1_vals, user2_vals):
 
 def get_avg():
     df = pd.read_csv(os.path.join("CSV//", name+".csv"))
-    unq_link = df.uniqueLink
     total_run = df.scrapeId.max()
     curr = 0
     s = 0
@@ -39,9 +38,19 @@ def create_input(avg):
     l.append(interval)
     l.append(avg)
     return l
+
+def plot():
+    df = pd.read_csv(os.path.join("CSV//", filename+".csv"))
+    df.plot.bar(x='interval', y='avg')
+    ax = plt.plot(title="Average Jaccard Similarities")
+    plt.set_xlabel=("intervals (min)")
+    plt.set_ylabel=("avg jaccard similarity")
+    plt.show()
+
 if __name__ == "__main__":
     avg = get_avg()
     i = create_input(avg)
     with open(filename+".csv", "a", encoding="utf-8",  newline="") as f:
         writer = csv.writer(f)
         writer.writerow(i)
+    plot()
