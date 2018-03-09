@@ -24,21 +24,23 @@ page_source = response.read()
 
 fb_username = "computational.journalism.lab@gmail.com"
 fb_password = "D66bkPphJ8D3bVzq"
-filename = "60m_by_10m"
-per_unit = 10
-total_time = 60
+per_unit = 5
+total_time = 1440
+filename = "24hr_by_5m"
 
-# def init_driver():
-#     driver = webdriver.Firefox()
-#     driver.wait = WebDriverWait(driver, 5)
-#     return driver
 def init_driver():
-    firefox_profile = webdriver.FirefoxProfile()
-    firefox_profile.set_preference("browser.privatebrowsing.autostart", True)
-    driver = webdriver.Firefox(firefox_profile=firefox_profile)
-    # driver = webdriver.Firefox()
+    driver = webdriver.Firefox()
+    driver.set_window_size(1124,850)
     driver.wait = WebDriverWait(driver, 5)
     return driver
+
+# def init_driver():
+#     firefox_profile = webdriver.FirefoxProfile()
+#     firefox_profile.set_preference("browser.privatebrowsing.autostart", True)
+#     driver = webdriver.Firefox(firefox_profile=firefox_profile)
+#     # driver = webdriver.Firefox()
+#     driver.wait = WebDriverWait(driver, 5)
+#     return driver
 
 def log_in(driver, username, pw):
     driver.get(link)
@@ -64,12 +66,12 @@ def click_icons(icon_ids):
     icons = driver.find_elements_by_class_name("_1o7n")
     index =  0
     outer_list = []
+    print("icon_ids: ", icon_ids)
     for icon in icons:
         icon.click()
         ts = datetime.datetime.now()
         catergory = icon_name(index)
-        print("index:", index)
-        print("icon_ids[]", icon_ids[index])
+        print("index:", index, "icon_ids[]", icon_ids[index])
         get_trending(icon_ids[index], outer_list, catergory, ts)
         index += 1
     scrapeID += 1
@@ -83,8 +85,9 @@ def load_icon_html():
         icon.click()
 
 def get_icon_id():
-    ids =[]
+    ids = []
     classes = driver.find_elements_by_css_selector("div._5my7")
+    #print(classes)
     for c in classes:
         ids.append(c.get_attribute("id"))
     return ids
@@ -139,14 +142,13 @@ def scrape_job(et):
         icon = driver.wait.until(EC.presence_of_element_located((By.CLASS_NAME, "_2md")))
         icon.click()
         load_icon_html()
+        driver.wait.until(EC.presence_of_element_located((By.CLASS_NAME, "_5my7")))
         icon_ids = get_icon_id()
         list_of_list = click_icons(icon_ids)
-        with open(filename+".csv", "a", encoding="utf-8") as f:
+        #print(list_of_list)
+        with open(filename+".csv", "a",  newline="", encoding="utf-8") as f:
             writer = csv.writer(f)
             writer.writerows(list_of_list)
-
-def tester():
-    print("hi there")
 
 if __name__ == "__main__":
     scrapeID = 0
@@ -154,7 +156,7 @@ if __name__ == "__main__":
     log_in(driver, fb_username, fb_password)
     with open(filename+".csv", "w", newline="", encoding="utf-8") as f:
         writer = csv.writer(f)
-        writer.writerow(["type", "title", "description", "source", "uniqueLink", "rank", "scrapeId", "timestamp"]) #Scrap ID
+        writer.writerow(["type", "title", "description", "source", "uniquelink", "rank", "scrapeid", "timestamp"]) #Scrap ID
         scheduler = BlockingScheduler()
         end_time = datetime.datetime.now() + datetime.timedelta(minutes=total_time)
         scheduler.add_job(lambda: scrape_job(end_time), "interval", minutes=per_unit, id='timed', max_instances=3)
@@ -165,4 +167,4 @@ if __name__ == "__main__":
         except (KeyboardInterrupt, Exception):
             scheduler.shutdown()
     #time.sleep(5)
-    #driver.quit()
+    driver.quit()
