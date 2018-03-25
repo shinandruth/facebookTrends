@@ -68,9 +68,13 @@ def create_input(avg):
 
 def plot():
     df = pd.read_csv(os.path.join("jaccard_CSV//", filename+".csv"))
-    ax = df.plot.bar(title="jaccard similarity", x='interval', y='avg', legend=True)
+    ax = df.plot.bar(title="How Often does FB Trends Change?", x='interval', y='avg', legend=True)
+    y = df['avg']
+    ax.set_ylabel("Jaccard Similarity")
+    ax.set_xlabel("Intervals")
+    # for i, v in enumerate(y):
+    #     ax.text(v, i, str(v), color='blue', fontweight='bold')
     fig = ax.get_figure()
-    #plt.show()
     fig.savefig("..//selenium_env//graphs//"+time_interval_filename+".png")
 
 def create_csv():
