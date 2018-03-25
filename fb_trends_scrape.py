@@ -24,23 +24,14 @@ page_source = response.read()
 
 fb_username = "computational.journalism.lab@gmail.com"
 fb_password = "D66bkPphJ8D3bVzq"
-per_unit = 5
-total_time = 1440
-filename = "24hr_by_5m"
+per_unit = 1
+filename = "1min_test"
 
 def init_driver():
     driver = webdriver.Firefox()
     driver.set_window_size(1124,850)
     driver.wait = WebDriverWait(driver, 5)
     return driver
-
-# def init_driver():
-#     firefox_profile = webdriver.FirefoxProfile()
-#     firefox_profile.set_preference("browser.privatebrowsing.autostart", True)
-#     driver = webdriver.Firefox(firefox_profile=firefox_profile)
-#     # driver = webdriver.Firefox()
-#     driver.wait = WebDriverWait(driver, 5)
-#     return driver
 
 def log_in(driver, username, pw):
     driver.get(link)
@@ -66,14 +57,16 @@ def click_icons(icon_ids):
     icons = driver.find_elements_by_class_name("_1o7n")
     index =  0
     outer_list = []
-    print("icon_ids: ", icon_ids)
+    length = len(icon_ids)
+    #print("id length:", length)
+    #print("icon_ids: ", icon_ids)
     for icon in icons:
-        icon.click()
-        ts = datetime.datetime.now()
-        catergory = icon_name(index)
-        print("index:", index, "icon_ids[]", icon_ids[index])
-        get_trending(icon_ids[index], outer_list, catergory, ts)
-        index += 1
+        if index < length:
+            icon.click()
+            ts = datetime.datetime.now()
+            category = icon_name(index)
+            get_trending(icon_ids[index], outer_list, category, ts)
+            index += 1
     scrapeID += 1
     return outer_list
 
@@ -85,12 +78,11 @@ def load_icon_html():
         icon.click()
 
 def get_icon_id():
-    ids = []
     classes = driver.find_elements_by_css_selector("div._5my7")
-    #print(classes)
+    icon_ids = []
     for c in classes:
-        ids.append(c.get_attribute("id"))
-    return ids
+        icon_ids.append(c.get_attribute("id"))
+    return icon_ids
 
 def icon_name(index):
     if index == 0:
@@ -131,24 +123,20 @@ def get_trending(id, outer_list, catergory, ts):
         count += 1
     return outer_list
 
-def scrape_job(et):
-    #scrapeID = scrape_id
-    st = datetime.datetime.now() - datetime.timedelta(seconds=1)
-    print("st:", st, "et:", et)
-    if st > et:
-        scheduler.remove_job('timed')
-        scheduler.shutdown()
-    else:
-        icon = driver.wait.until(EC.presence_of_element_located((By.CLASS_NAME, "_2md")))
-        icon.click()
-        load_icon_html()
-        driver.wait.until(EC.presence_of_element_located((By.CLASS_NAME, "_5my7")))
-        icon_ids = get_icon_id()
-        list_of_list = click_icons(icon_ids)
-        #print(list_of_list)
-        with open(filename+".csv", "a",  newline="", encoding="utf-8") as f:
-            writer = csv.writer(f)
-            writer.writerows(list_of_list)
+def scrape_job():
+    print("current run:", datetime.datetime.now())
+    icon = driver.wait.until(EC.presence_of_element_located((By.CLASS_NAME, "_2md")))
+    icon.click()
+    driver.refresh()
+    load_icon_html()
+    driver.wait.until(EC.presence_of_element_located((By.CLASS_NAME, "_5my7")))
+    icon_ids = get_icon_id()
+    #print("got icon_ids")
+    list_of_list = click_icons(icon_ids)
+    #print("got click_icons")
+    with open(filename+".csv", "a",  newline="", encoding="utf-8") as f:
+        writer = csv.writer(f)
+        writer.writerows(list_of_list)
 
 if __name__ == "__main__":
     scrapeID = 0
@@ -157,14 +145,13 @@ if __name__ == "__main__":
     with open(filename+".csv", "w", newline="", encoding="utf-8") as f:
         writer = csv.writer(f)
         writer.writerow(["type", "title", "description", "source", "uniquelink", "rank", "scrapeid", "timestamp"]) #Scrap ID
-        scheduler = BlockingScheduler()
-        end_time = datetime.datetime.now() + datetime.timedelta(minutes=total_time)
-        scheduler.add_job(lambda: scrape_job(end_time), "interval", minutes=per_unit, id='timed', max_instances=3)
-        print("current:", datetime.datetime.now())
-        scheduler.start()
+        sched = BlockingScheduler()
+        job = sched.add_job(scrape_job, "interval", minutes=per_unit, misfire_grace_time=30) #max_runs
+        print("scrape started at:", datetime.datetime.now())
+        sched.start()
         try:
             time.sleep(1)
         except (KeyboardInterrupt, Exception):
-            scheduler.shutdown()
+            sched.shutdown()
     #time.sleep(5)
     driver.quit()

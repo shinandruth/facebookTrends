@@ -6,9 +6,9 @@ import numpy as np
 from math import *
 
 interval = 5
-name = "24hr_by_5m"
+name = "1min_test"
 filename = "jaccard" + name
-time_diff = 10
+time_diff = 1
 
 def compute_jaccard(user1_vals, user2_vals):
     intersection = user1_vals.intersection(user2_vals)
@@ -26,7 +26,6 @@ def get_avg():
         prev = curr
         curr = (df.loc[df["scrapeid"] == n, "title"]).drop_duplicates().values.tolist()
         if prev != 0:
-            #print(len(prev), len(curr))
             similarity.append(compute_jaccard(set(prev), set(curr)))
     for val in similarity:
         s += val
@@ -47,6 +46,7 @@ def plot():
     #plt.show()
     fig.savefig("..//selenium_env//graphs//"+filename+".png")
 
+# 
 # def interval_csv(input_filepath):
 #     output_data = []
 #     line = 2
@@ -66,5 +66,6 @@ if __name__ == "__main__":
     i = create_input(avg)
     with open(filename+".csv", "a", encoding="utf-8",  newline="") as f:
         writer = csv.writer(f)
+        writer.writerow(["name", "interval", "avg"]) #Scrap ID
         writer.writerow(i)
     plot()
