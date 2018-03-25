@@ -6,7 +6,7 @@ import numpy as np
 from math import *
 
 #--------------CHANGE HERE ---------------------
-interval = 45
+interval = 1
 name = "1min_test"
 filename = "jaccard_" + name
 time_interval_filename = filename + "_by" + str(interval) + "min"
@@ -67,7 +67,7 @@ def create_input(avg):
     return l
 
 def plot():
-    df = pd.read_csv(os.path.join("CSV//", time_interval_filename+".csv"))
+    df = pd.read_csv(os.path.join("jaccard_CSV//", filename+".csv"))
     ax = df.plot.bar(title="jaccard similarity", x='interval', y='avg', legend=True)
     fig = ax.get_figure()
     #plt.show()
@@ -96,12 +96,12 @@ def create_csv():
                     scrapeid += interval
 
 if __name__ == "__main__":
-    avg = get_avg()
-    i = create_input(avg)
-    #Create interval csv files
-    #create_csv()
-    with open("jaccard_CSV//"+filename+".csv", "a", encoding="utf-8",  newline="") as f:
-        writer = csv.writer(f)
-        #writer.writerow(["name", "interval", "avg"]) #Scrap ID
-        writer.writerow(i)
-    #plot()
+    # avg = get_avg()
+    # i = create_input(avg)
+    # Create interval csv files
+    # create_csv()
+    # with open("jaccard_CSV//"+filename+".csv", "a", encoding="utf-8",  newline="") as f:
+    #     writer = csv.writer(f)
+    #     #writer.writerow(["name", "interval", "avg"]) #Scrap ID
+    #     writer.writerow(i)
+    plot()
