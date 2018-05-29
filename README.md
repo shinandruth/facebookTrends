@@ -24,6 +24,7 @@ Shin Lee's Northwestern University MMSS Senior Thesis
 #### Cloud
 * Google Chrome: google-chrome-stable-66.0.3359.117-1.x86_64 
 * ChromeDriver: 2.38.552522
+* GeckoDriver: 0.20.1
 * Selenium: 3.11.0
 * Python: 3.6
 
