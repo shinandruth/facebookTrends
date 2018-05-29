@@ -2,7 +2,7 @@
 Shin Lee's Northwestern University MMSS Senior Thesis
 
 ## Project
-### This code collects Trending Topic data from Facebook
+### This code collects Trending Topic data from Facebook Using Selenium
 <dl>
   <dt>The Code Collects the Following</dt>
   <dd>1. Trending Topics (Category, Title, Description, TrendLink, Ranking, ScrapeID, Timestamp, Source)</dd>
@@ -16,8 +16,25 @@ Shin Lee's Northwestern University MMSS Senior Thesis
 
 </dl>
 
-## Features
-
 ## Installation 
 
-## Description
+## Common Errors
+* Q: selenium.common.exceptions.WebDriverException: Message: unknown error: cannot find Chrome binary A: https://askubuntu.com/questions/708581/have-installed-chrome-on-ubuntu-however-cannot-find-where-to-run-it
+* selenium.common.exceptions.WebDriverException: Message: 'chromedriver.exe' executable may have wrong permissions. Please see https://sites.google.com/a/chromium.org/chromedriver/home
+sudo chmod 777 chromedriver.exe"
+selenium.common.exceptions.WebDriverException: Message: unknown error: Chrome failed to start: exited abnormally
+https://stackoverflow.com/questions/22558077/unknown-error-chrome-failed-to-start-exited-abnormally-driver-info-chromedri
+ModuleNotFoundError: No module named 'pyvirtualdisplay'
+https://github.com/timgrossmann/InstaPy/issues/10
+No package xvfb available. No package xserver-xephyr available
+https://serverfault.com/questions/344793/install-xvfb-via-yum-yum-repository-for-xvfb
+ModuleNotFoundError: No module named 'pyvirtualdisplay'
+https://github.com/timgrossmann/InstaPy/issues/727
+pip install pyvirtualdisplay -U
+selenium.common.exceptions.WebDriverException: Message: 'chromedriver.exe' executable needs to be in PATH. Please see https://sites.google.com/a/chromium.org/chromedriver/home
+ name 'MySQLdb' is not defined
+selenium.common.exceptions.WebDriverException: Message: chrome not reachable
+ModuleNotFoundError: No module named 'pymysql'
+Pip install pymysql
+TypeError: not enough arguments for format string
+
