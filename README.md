@@ -37,7 +37,7 @@ Shin Lee's Northwestern University MMSS Senior Thesis
 4. Install pip <br>
 https://pip.pypa.io/en/stable/installing/
 5. Get Python frameworks, libraries, software and resources. <br>
-*python -m pip install awesome_package (https://github.com/vinta/awesome-python)*
+*python -m pip install awesome_package (more info at https://github.com/vinta/awesome-python)*
 6. Get AP Scheduler <br>
 *pip install apscheduler*
 7. Get pyvirtualdisplay <br>
