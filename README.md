@@ -33,6 +33,12 @@ Shin Lee's Northwestern University MMSS Senior Thesis
 *python -m pip install awesome_package (https://github.com/vinta/awesome-python)*
 2. Get AP Scheduler <br>
 *pip install apscheduler*
+3. Get pyvirtualdisplay
+*pip3.5 install pyvirtualdisplay*
+4. Get Selenium Webdriver
+*python -m pip install -U selenium*
+5. Get pymysql
+*install pymysql*
 
 ## Common Errors
 * Q: selenium.common.exceptions.WebDriverException: Message: unknown error: cannot find Chrome binary <br> A: https://askubuntu.com/questions/708581/have-installed-chrome-on-ubuntu-however-cannot-find-where-to-run-it
