@@ -18,11 +18,7 @@ path = "CSV//Data for Thesis//Trends//"
 def compute_jaccard(user1_vals, user2_vals):
     intersection = user1_vals.intersection(user2_vals)
     union = user1_vals.union(user2_vals)
-    if len(union) != 0:
-        jaccard = len(intersection)/float(len(union))
-    else:
-        jaccard = 0.5
-        print("union was zero....")
+    jaccard = len(intersection)/float(len(union))
     return jaccard
 
 def get_new_trends(x, type):
