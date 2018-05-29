@@ -33,11 +33,11 @@ Shin Lee's Northwestern University MMSS Senior Thesis
 *python -m pip install awesome_package (https://github.com/vinta/awesome-python)*
 2. Get AP Scheduler <br>
 *pip install apscheduler*
-3. Get pyvirtualdisplay
+3. Get pyvirtualdisplay <br>
 *pip3.5 install pyvirtualdisplay*
-4. Get Selenium Webdriver
+4. Get Selenium Webdriver <br>
 *python -m pip install -U selenium*
-5. Get pymysql
+5. Get pymysql <br>
 *install pymysql*
 
 ## Common Errors
