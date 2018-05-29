@@ -23,9 +23,10 @@ Shin Lee's Northwestern University MMSS Senior Thesis
 ## Version
 #### Cloud
 * Google Chrome: google-chrome-stable-66.0.3359.117-1.x86_64 
+* Firefox: 52.8.0
 * ChromeDriver: 2.38.552522
 * GeckoDriver: 0.20.1
-* Selenium: 3.11.0
+* Selenium: 3.12.0
 * Python: 3.6
 
 ## Installation 
@@ -61,6 +62,12 @@ https://pip.pypa.io/en/stable/installing/
 *tar xvzf filename.tar.gz*
 3. Add geckodriver to PATH <br>
 *export PATH=$PATH:/path/to/geckodriver*
+4. Install Firefox <br>
+*yum install firefox*
+5. Install pyvirtualdisplay <br>
+*pip install pyvirtualdisplay selenium*
+6. Install Xvfb <br>
+*sudo yum install Xvfb*
 
 ## Common Errors
 * Q: selenium.common.exceptions.WebDriverException: Message: unknown error: cannot find Chrome binary <br> A: https://askubuntu.com/questions/708581/have-installed-chrome-on-ubuntu-however-cannot-find-where-to-run-it
