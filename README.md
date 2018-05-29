@@ -50,7 +50,7 @@ https://pip.pypa.io/en/stable/installing/
 #### Linux (AWS Red Hat Fedora) 
 1. Install git <br>
 *yum install git*
-2. Clone repo
+2. Clone repo <br>
 *git clone https://github.com/comp-journalism/fb-trends.git*
 3. *cd fb-trends*
 4. Now you can run your code on the cloud! :thumbsup:
