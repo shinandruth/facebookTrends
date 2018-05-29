@@ -1,2 +1,10 @@
-# facebookTrends
-Shin Lee's Northwestern University Senior Thesis - MMSS and Computer Science Honors
+# Facebook Trends
+Shin Lee's Northwestern University MMSS Senior Thesis
+
+## Project
+
+## Features
+
+## Installation 
+
+## Description
