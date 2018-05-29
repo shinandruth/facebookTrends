@@ -25,7 +25,7 @@ Shin Lee's Northwestern University MMSS Senior Thesis
 * Google Chrome: google-chrome-stable-66.0.3359.117-1.x86_64 
 * ChromeDriver: 2.38.552522
 * Selenium: 3.11.0
-* Python 3.6
+* Python: 3.6
 
 ## Installation 
 #### Windows
@@ -39,6 +39,8 @@ Shin Lee's Northwestern University MMSS Senior Thesis
 *python -m pip install -U selenium*
 5. Get pymysql <br>
 *install pymysql*
+
+#### Linux (AWS Red Hat) 
 
 ## Common Errors
 * Q: selenium.common.exceptions.WebDriverException: Message: unknown error: cannot find Chrome binary <br> A: https://askubuntu.com/questions/708581/have-installed-chrome-on-ubuntu-however-cannot-find-where-to-run-it
