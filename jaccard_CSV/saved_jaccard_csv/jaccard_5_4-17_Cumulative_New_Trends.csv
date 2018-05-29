@@ -1,0 +1,61 @@
+type,interval,new trends,,,,
+Top Trends,5,146,98,116,160,130
+Top Trends,10,116,86,108,140,120
+Top Trends,15,108,62,52,90,64
+Top Trends,20,88,56,70,90,72
+Top Trends,25,80,68,74,78,54
+Top Trends,30,74,42,46,68,54
+Top Trends,35,62,44,40,54,50
+Top Trends,40,68,42,38,66,38
+Top Trends,45,66,44,34,58,38
+Top Trends,50,50,37,43,45,37
+Top Trends,55,54,36,30,56,36
+Top Trends,60,52,32,34,48,30
+Politics,5,98,,,,
+Politics,10,86,,,,
+Politics,15,62,,,,
+Politics,20,56,,,,
+Politics,25,68,,,,
+Politics,30,42,,,,
+Politics,35,44,,,,
+Politics,40,42,,,,
+Politics,45,44,,,,
+Politics,50,37,,,,
+Politics,55,36,,,,
+Politics,60,32,,,,
+Science and Technology,5,116,,,,
+Science and Technology,10,108,,,,
+Science and Technology,15,52,,,,
+Science and Technology,20,70,,,,
+Science and Technology,25,74,,,,
+Science and Technology,30,46,,,,
+Science and Technology,35,40,,,,
+Science and Technology,40,38,,,,
+Science and Technology,45,34,,,,
+Science and Technology,50,43,,,,
+Science and Technology,55,30,,,,
+Science and Technology,60,34,,,,
+Sports,5,160,,,,
+Sports,10,140,,,,
+Sports,15,90,,,,
+Sports,20,90,,,,
+Sports,25,78,,,,
+Sports,30,68,,,,
+Sports,35,54,,,,
+Sports,40,66,,,,
+Sports,45,58,,,,
+Sports,50,45,,,,
+Sports,55,56,,,,
+Sports,60,48,,,,
+Entertainment,5,130,,,,
+Entertainment,10,120,,,,
+Entertainment,15,64,,,,
+Entertainment,20,72,,,,
+Entertainment,25,54,,,,
+Entertainment,30,54,,,,
+Entertainment,35,50,,,,
+Entertainment,40,38,,,,
+Entertainment,45,38,,,,
+Entertainment,50,37,,,,
+Entertainment,55,36,,,,
+Entertainment,60,30,,,,

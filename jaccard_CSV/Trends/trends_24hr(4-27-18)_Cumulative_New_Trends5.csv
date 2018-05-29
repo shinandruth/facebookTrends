@@ -1,0 +1,61 @@
+Type,Interval,New Trends,,,,,,,,
+Top Trends,5,60,,,,Top Trends,Politics,Science/Tech,Sports,Entertainment
+Top Trends,10,55,,,5,60,37,35,49,35
+Top Trends,15,51,,,10,55,36,35,47,34
+Top Trends,20,47,,,15,51,34,29,46,31
+Top Trends,25,43,,,20,47,32,30,45,31
+Top Trends,30,40,,,25,43,32,31,43,28
+Top Trends,35,36,,,30,40,28,29,42,30
+Top Trends,40,39,,,35,36,27,27,36,27
+Top Trends,45,39,,,40,39,28,26,42,27
+Top Trends,50,31,,,45,39,27,25,38,28
+Top Trends,55,32,,,50,31,23,26,28,23
+Top Trends,60,32,,,55,32,25,24,37,27
+Politics,5,37,,,60,32,24,25,33,24
+Politics,10,36,,,,,,,,
+Politics,15,34,,,,,,,,
+Politics,20,32,,,,,,,,
+Politics,25,32,,,,,,,,
+Politics,30,28,,,,,,,,
+Politics,35,27,,,,,,,,
+Politics,40,28,,,,,,,,
+Politics,45,27,,,,,,,,
+Politics,50,23,,,,,,,,
+Politics,55,25,,,,,,,,
+Politics,60,24,,,,,,,,
+Science/Tech,5,35,,,,,,,,
+Science/Tech,10,35,,,,,,,,
+Science/Tech,15,29,,,,,,,,
+Science/Tech,20,30,,,,,,,,
+Science/Tech,25,31,,,,,,,,
+Science/Tech,30,29,,,,,,,,
+Science/Tech,35,27,,,,,,,,
+Science/Tech,40,26,,,,,,,,
+Science/Tech,45,25,,,,,,,,
+Science/Tech,50,26,,,,,,,,
+Science/Tech,55,24,,,,,,,,
+Science/Tech,60,25,,,,,,,,
+Sports,5,49,,,,,,,,
+Sports,10,47,,,,,,,,
+Sports,15,46,,,,,,,,
+Sports,20,45,,,,,,,,
+Sports,25,43,,,,,,,,
+Sports,30,42,,,,,,,,
+Sports,35,36,,,,,,,,
+Sports,40,42,,,,,,,,
+Sports,45,38,,,,,,,,
+Sports,50,28,,,,,,,,
+Sports,55,37,,,,,,,,
+Sports,60,33,,,,,,,,
+Entertainment,5,35,,,,,,,,
+Entertainment,10,34,,,,,,,,
+Entertainment,15,31,,,,,,,,
+Entertainment,20,31,,,,,,,,
+Entertainment,25,28,,,,,,,,
+Entertainment,30,30,,,,,,,,
+Entertainment,35,27,,,,,,,,
+Entertainment,40,27,,,,,,,,
+Entertainment,45,28,,,,,,,,
+Entertainment,50,23,,,,,,,,
+Entertainment,55,27,,,,,,,,
+Entertainment,60,24,,,,,,,,
