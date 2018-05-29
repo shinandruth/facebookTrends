@@ -19,9 +19,9 @@ Shin Lee's Northwestern University MMSS Senior Thesis
 ## Installation 
 
 ## Common Errors
-* selenium.common.exceptions.WebDriverException: Message: unknown error: cannot find Chrome binary https://askubuntu.com/questions/708581/have-installed-chrome-on-ubuntu-however-cannot-find-where-to-run-it
-* selenium.common.exceptions.WebDriverException: Message: 'chromedriver.exe' executable may have wrong permissions. Please see https://sites.google.com/a/chromium.org/chromedriver/home
-sudo chmod 777 chromedriver.exe
+* Q: selenium.common.exceptions.WebDriverException: Message: unknown error: cannot find Chrome binary <br> A: https://askubuntu.com/questions/708581/have-installed-chrome-on-ubuntu-however-cannot-find-where-to-run-it
+* Q: selenium.common.exceptions.WebDriverException: Message: 'chromedriver.exe' executable may have wrong permissions. Please see https://sites.google.com/a/chromium.org/chromedriver/home <br>
+A: sudo chmod 777 chromedriver.exe
 * selenium.common.exceptions.WebDriverException: Message: unknown error: Chrome failed to start: exited abnormally
 https://stackoverflow.com/questions/22558077/unknown-error-chrome-failed-to-start-exited-abnormally-driver-info-chromedri
 * ModuleNotFoundError: No module named 'pyvirtualdisplay'
