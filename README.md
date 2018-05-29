@@ -29,15 +29,22 @@ Shin Lee's Northwestern University MMSS Senior Thesis
 
 ## Installation 
 #### Windows
-1. Get Python frameworks, libraries, software and resources. <br>
+1. Download Git from https://git-scm.com/download/win
+2. Clone the repo <br>
+*git clone https://github.com/comp-journalism/fb-trends.git*
+3. To activate the virtual environment <br>
+*.\Scripts\Activate*
+4. Install pip <br>
+https://pip.pypa.io/en/stable/installing/
+5. Get Python frameworks, libraries, software and resources. <br>
 *python -m pip install awesome_package (https://github.com/vinta/awesome-python)*
-2. Get AP Scheduler <br>
+6. Get AP Scheduler <br>
 *pip install apscheduler*
-3. Get pyvirtualdisplay <br>
+7. Get pyvirtualdisplay <br>
 *pip3.5 install pyvirtualdisplay*
-4. Get Selenium Webdriver <br>
+8. Get Selenium Webdriver <br>
 *python -m pip install -U selenium*
-5. Get pymysql <br>
+9. Get pymysql <br>
 *install pymysql*
 
 #### Linux (AWS Red Hat) 
