@@ -1,8 +1,6 @@
-# LIBRARIES USED:
-# SELENIUM, APSCHEDULER
-# pip install apscheduler
+#fb_proxy_ca.py
 
-#Last edited: 5/1/2018 5:30pm
+
 import time
 import csv
 import datetime

@@ -154,10 +154,6 @@ def compare_similarities_of_two_csv_per_topic(csv1, csv2, type):
     l.append(len(set(f1) & set(f2)))
     l.append(type)
     return l
-def test(csv1):
-    df1 = pd.read_csv(os.path.join(path, csv1+".csv"))
-    f1 = df1.loc[(df1["type"] == "Science and Technology"), "title"].values.tolist()
-    print(set(f1))
 
 
 if __name__ == "__main__":
