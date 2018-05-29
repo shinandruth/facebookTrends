@@ -26,8 +26,9 @@ from selenium.webdriver.common.action_chains import ActionChains
 link = "http://www.facebook.com"
 os.environ["LANG"] = "en_US.UTF-8"
 
-#----------------SET chrome_driver_name TO LOCATION OF YOUR CHROME DRIVER--------------------------
-chrome_driver_name = "/home/ec2-user/selenium_env/chromedriver"
+#----------------SET chrome_driver_name/gecko_driver TO LOCATION OF YOUR CHROME DRIVER--------------------------
+chrome_driver = "/home/ec2-user/selenium_env/chromedriver"
+gecko_driver = "/home/ec2-user/selenium_env/geckodriver"
 #--------------------------------Config File---------------------------------
 config = configparser.ConfigParser()
 config.read("config.ini")
@@ -53,15 +54,24 @@ Initiates the webdriver
 def init_driver():
     display = Display(visible=0, size=(800,600))
     display.start()
-    chrome_options = webdriver.ChromeOptions()
-    chrome_options.add_argument("start-maximized")
-    chrome_options.add_argument("--headless")
-    chrome_options.add_argument('--disable-gpu')
-    chrome_options.add_argument('--no-sandbox')
-    chrome_options.add_argument("--disable-setuid-sandbox")
-    chrome_options.add_argument('--disable-extensions')
-    chrome_driver = chrome_driver_name
-    driver = webdriver.Chrome(executable_path=chrome_driver, chrome_options=chrome_options)
+    # chrome_options = webdriver.ChromeOptions()
+    # chrome_options.add_argument("start-maximized")
+    # chrome_options.add_argument("--headless")
+    # chrome_options.add_argument('--disable-gpu')
+    # chrome_options.add_argument('--no-sandbox')
+    # chrome_options.add_argument("--disable-setuid-sandbox")
+    # chrome_options.add_argument('--disable-extensions')
+    # driver = webdriver.Chrome(executable_path=chrome_driver, chrome_options=chrome_options)
+    #----------------Firefox--------------
+    firefox_options = webdriver.FirefoxOptions()
+    firefox_options.add_argument("start-maximized")
+    firefox_options.add_argument("--headless")
+    firefox_options.add_argument('--disable-gpu')
+    firefox_options.add_argument('--no-sandbox')
+    firefox_options.add_argument("--disable-setuid-sandbox")
+    firefox_options.add_argument('--disable-extensions')
+    driver = webdriver.Firefox(executable_path=gecko_driver, firefox_options=firefox_options)
+    #-------------------------------------
     driver.wait = WebDriverWait(driver, 5)
     return driver
 
