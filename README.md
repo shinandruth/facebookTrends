@@ -47,7 +47,13 @@ https://pip.pypa.io/en/stable/installing/
 9. Get pymysql <br>
 *install pymysql*
 
-#### Linux (AWS Red Hat) 
+#### Linux (AWS Red Hat Fedora) 
+1. Install git <br>
+*yum install git*
+2. Clone repo
+*git clone https://github.com/comp-journalism/fb-trends.git*
+3. *cd fb-trends*
+4. Now you can run your code on the cloud! :thumbsup:
 
 ## Common Errors
 * Q: selenium.common.exceptions.WebDriverException: Message: unknown error: cannot find Chrome binary <br> A: https://askubuntu.com/questions/708581/have-installed-chrome-on-ubuntu-however-cannot-find-where-to-run-it
