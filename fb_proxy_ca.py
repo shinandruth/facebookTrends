@@ -30,7 +30,6 @@ WINDOW_SIZE = "1920,1080"
 
 #----------------SET chrome_driver_name TO LOCATION OF YOUR CHROME DRIVER--------------------------
 chrome_driver_name = ""
-
 #--------------------------------Config File---------------------------------
 config = configparser.ConfigParser()
 config.read("config.ini")
@@ -40,21 +39,20 @@ fb_username = config[config_type]["USERNAME"]
 fb_password = config[config_type]["PASSWORD"]
 per_unit = 10 #int(config[config_type]["INTERVAL"])
 filename = config[config_type]["FILENAME"]
-
 #--------------------------------DB Connection---------------------------------
-
 db = pymysql.connect(host="fb-scrape-db.c0lrs8fl8ynt.us-east-2.rds.amazonaws.com",
                      user="cjldbmaster",
                      password="WR3QZGVaoHqNXAF",
                      db="fb_scrape_db",
                      charset="utf8mb4")
 cursor = db.cursor()
-
 #---------------------------------Proxy-----------------------------------------
 PROXY = "184.169.237.199:8888"
-
 #--------------------------------Scrape Functions---------------------------------
-
+'''
+init_driver()
+Initiates the webdriver
+'''
 def init_driver():
     # display = Display(visible=0, size=(800,600))
     # display.start()
@@ -72,6 +70,11 @@ def init_driver():
     driver.wait = WebDriverWait(driver, 5)
     return driver
 
+'''
+log_in(driver, username, pw)
+Login to facebook
+Prints error message if login failed
+'''
 def log_in(driver, username, pw):
     driver.get(link)
     try:
@@ -84,6 +87,10 @@ def log_in(driver, username, pw):
     except TimeoutException:
         print("Username, password, and/or log in button not found at", link)
 
+'''
+click_icons(icon_ids)
+Clicks through the all the icons and initiates the data collection
+'''
 def click_icons(icon_ids):
     global scrapeID
     icons = driver.find_elements_by_class_name("_1o7n")
@@ -103,6 +110,10 @@ def click_icons(icon_ids):
     # return outer_list, outer_tab
     return outer_list
 
+'''
+load_icon_html()
+Clicks through the icons to load the HTML element for each Trending Topic category
+'''
 def load_icon_html():
     WebDriverWait(driver, 100).until(lambda driver: driver.find_element_by_class_name("_1o7n"))
     icons = driver.find_elements_by_class_name("_1o7n")
@@ -116,6 +127,10 @@ def load_icon_html():
         icon.click()
         count += 1
 
+'''
+get_icon_id()
+Gets the Icon IDs for Trending Topic's Categories
+'''
 def get_icon_id():
     classes = driver.find_elements_by_class_name("_5my7")
     icon_ids = []
@@ -127,6 +142,10 @@ def get_icon_id():
         icon_ids = get_icon_id(driver)
     return icon_ids
 
+'''
+icon_name(index)
+Creates icon name (Trending Topic Category) for documentation purposes
+'''
 def icon_name(index):
     if index == 0:
         return "Top Trends"
@@ -141,10 +160,18 @@ def icon_name(index):
     else:
         return "Error: Could not find icon name"
 
+'''
+hover(i)
+Hovers over element i
+'''
 def hover(i):
     hover = ActionChains(driver).move_to_element(i)
     hover.perform()
 
+'''
+new_tab(link, category, scrapeID, t)
+Gets the tab information for each tab
+'''
 def new_tab(link, category, scrapeID, t):
     time.sleep(random.randint(10,15))
     outer_l, l = [], []
@@ -204,6 +231,11 @@ def new_tab(link, category, scrapeID, t):
     driver.switch_to.window(driver.window_handles[0])
     return outer_l
 
+'''
+get_trendings(id, outer_list, outer_tab, category, ts)
+Gets trending and tabs information.
+Note: new_tab() is called in this function
+'''
 def get_trending(id, outer_list, outer_tab, catergory, ts):
     WebDriverWait(driver, 100).until(lambda driver: driver.find_element_by_class_name("_5myl"))
     current = driver.find_element_by_id(id)
@@ -231,7 +263,10 @@ def get_trending(id, outer_list, outer_tab, catergory, ts):
     #return outer_list, outer_tab
     return outer_list
 
-
+'''
+scrape_job()
+APScheduler's job - all task to scrape Facebook trends and tabs.
+'''
 def scrape_job():
     print(datetime.datetime.now())
     time.sleep(5)

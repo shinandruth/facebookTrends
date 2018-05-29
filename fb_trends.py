@@ -27,7 +27,6 @@ link = "http://www.facebook.com"
 
 #----------------SET chrome_driver_name TO LOCATION OF YOUR CHROME DRIVER--------------------------
 chrome_driver_name = ""
-
 #--------------------------------Config File---------------------------------
 config = configparser.ConfigParser()
 config.read("config.ini")
@@ -37,6 +36,13 @@ fb_username = config[config_type]["USERNAME"]
 fb_password = config[config_type]["PASSWORD"]
 per_unit = int(config[config_type]["INTERVAL"])
 filename = config[config_type]["FILENAME"]
+#--------------------------------DB Connection---------------------------------
+db = pymysql.connect(host="fb-scrape-db.c0lrs8fl8ynt.us-east-2.rds.amazonaws.com",
+                     user="cjldbmaster",
+                     password="WR3QZGVaoHqNXAF",
+                     db="fb_scrape_db",
+                     charset="utf8mb4")
+cursor = db.cursor()
 #--------------------------------Scrape Functions---------------------------------
 
 '''
@@ -160,6 +166,7 @@ Hovers over element i
 def hover(i):
     hover = ActionChains(driver).move_to_element(i)
     hover.perform()
+
 '''
 new_tab(link, category, scrapeID, t)
 Gets the tab information for each tab
@@ -253,6 +260,7 @@ def get_trending(id, outer_list, outer_tab, category, ts):
         single_tab = new_tab(link, catergory, scrapeID, ts.isoformat())
         outer_tab.append(single_tab)
     return outer_list, outer_tab
+
 '''
 scrape_job()
 APScheduler's job - all task to scrape Facebook trends and tabs.
