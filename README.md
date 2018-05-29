@@ -14,6 +14,10 @@ Shin Lee's Northwestern University MMSS Senior Thesis
   <dd>4. Gets total unique URLs from Trending Topic Tabs (per category and overall) </dd>
   <dd>5. Ranks the news sources by number of articles </dd>
 </dl>
+## Feature
+* Proxy (Northern California)
+* AWS cloud database
+* AWS cloud server
 
 ## Version
 #### Cloud
