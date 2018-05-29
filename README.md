@@ -24,6 +24,7 @@ Shin Lee's Northwestern University MMSS Senior Thesis
 #### Cloud
 * Google Chrome: google-chrome-stable-66.0.3359.117-1.x86_64 
 * ChromeDriver: 2.38.552522
+* GeckoDriver: 0.20.1
 * Selenium: 3.11.0
 * Python: 3.6
 
@@ -54,6 +55,12 @@ https://pip.pypa.io/en/stable/installing/
 *git clone https://github.com/comp-journalism/fb-trends.git*
 3. *cd fb-trends*
 4. Now you can run your code on the cloud! :thumbsup:
+##### Firefox on Linux
+1. Download geckodriver at https://github.com/mozilla/geckodriver/releases
+2. Extract the downloaded file <br>
+*tar xvzf filename.tar.gz*
+3. Add geckodriver to PATH <br>
+*export PATH=$PATH:/path/to/geckodriver*
 
 ## Common Errors
 * Q: selenium.common.exceptions.WebDriverException: Message: unknown error: cannot find Chrome binary <br> A: https://askubuntu.com/questions/708581/have-installed-chrome-on-ubuntu-however-cannot-find-where-to-run-it
