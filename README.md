@@ -25,8 +25,14 @@ Shin Lee's Northwestern University MMSS Senior Thesis
 * Google Chrome: google-chrome-stable-66.0.3359.117-1.x86_64 
 * ChromeDriver: 2.38.552522
 * Selenium: 3.11.0
+* Python 3.6
 
 ## Installation 
+#### Windows
+1. Get Python frameworks, libraries, software and resources. <br>
+*python -m pip install awesome_package (https://github.com/vinta/awesome-python)*
+2. Get AP Scheduler <br>
+*pip install apscheduler*
 
 ## Common Errors
 * Q: selenium.common.exceptions.WebDriverException: Message: unknown error: cannot find Chrome binary <br> A: https://askubuntu.com/questions/708581/have-installed-chrome-on-ubuntu-however-cannot-find-where-to-run-it
@@ -43,4 +49,6 @@ A: https://github.com/timgrossmann/InstaPy/issues/727 <br>
 pip install pyvirtualdisplay -U
 * Q: ModuleNotFoundError: No module named 'pymysql'<br>
 A: Pip install pymysql
+* Q: How to get root access on cloud <br>
+A: Sudo su
 
