@@ -13,8 +13,13 @@ Shin Lee's Northwestern University MMSS Senior Thesis
   <dd>3. Compares the number of cumulative new Trending Topics between two CSV (per category and overall)</dd>
   <dd>4. Gets total unique URLs from Trending Topic Tabs (per category and overall) </dd>
   <dd>5. Ranks the news sources by number of articles </dd>
-
 </dl>
+
+## Version
+#### Cloud
+* Google Chrome: google-chrome-stable-66.0.3359.117-1.x86_64 
+* ChromeDriver: 2.38.552522
+* Selenium: 3.11.0
 
 ## Installation 
 
