@@ -22,16 +22,15 @@ Shin Lee's Northwestern University MMSS Senior Thesis
 * Q: selenium.common.exceptions.WebDriverException: Message: unknown error: cannot find Chrome binary <br> A: https://askubuntu.com/questions/708581/have-installed-chrome-on-ubuntu-however-cannot-find-where-to-run-it
 * Q: selenium.common.exceptions.WebDriverException: Message: 'chromedriver.exe' executable may have wrong permissions. Please see https://sites.google.com/a/chromium.org/chromedriver/home <br>
 A: sudo chmod 777 chromedriver.exe
-* selenium.common.exceptions.WebDriverException: Message: unknown error: Chrome failed to start: exited abnormally
-https://stackoverflow.com/questions/22558077/unknown-error-chrome-failed-to-start-exited-abnormally-driver-info-chromedri
-* ModuleNotFoundError: No module named 'pyvirtualdisplay'
-https://github.com/timgrossmann/InstaPy/issues/10
-* No package xvfb available. No package xserver-xephyr available
-https://serverfault.com/questions/344793/install-xvfb-via-yum-yum-repository-for-xvfb
-* ModuleNotFoundError: No module named 'pyvirtualdisplay'
-https://github.com/timgrossmann/InstaPy/issues/727
+* Q: selenium.common.exceptions.WebDriverException: Message: unknown error: Chrome failed to start: exited abnormally <br>
+A: https://stackoverflow.com/questions/22558077/unknown-error-chrome-failed-to-start-exited-abnormally-driver-info-chromedri
+* Q: ModuleNotFoundError: No module named 'pyvirtualdisplay'<br>
+A: https://github.com/timgrossmann/InstaPy/issues/10
+* Q: No package xvfb available. No package xserver-xephyr available <br>
+A: https://serverfault.com/questions/344793/install-xvfb-via-yum-yum-repository-for-xvfb
+* Q: ModuleNotFoundError: No module named 'pyvirtualdisplay'<br>
+A: https://github.com/timgrossmann/InstaPy/issues/727 <br>
 pip install pyvirtualdisplay -U
-* selenium.common.exceptions.WebDriverException: Message: 'chromedriver.exe' executable needs to be in PATH. Please see https://sites.google.com/a/chromium.org/chromedriver/home
-* ModuleNotFoundError: No module named 'pymysql'
-Pip install pymysql
+* Q: ModuleNotFoundError: No module named 'pymysql'<br>
+A: Pip install pymysql
 
