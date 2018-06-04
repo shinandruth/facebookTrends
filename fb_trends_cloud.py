@@ -14,6 +14,7 @@ from time import gmtime, strftime
 from pyvirtualdisplay import Display
 
 from selenium import webdriver
+from selenium.webdriver.common.desired_capabilities import DesiredCapabilities
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.firefox.options import Options
 from selenium.webdriver.common.keys import Keys
@@ -52,7 +53,7 @@ init_driver()
 Initiates the webdriver
 '''
 def init_driver():
-    display = Display(visible=0, size=(800,600))
+    display = Display(visible=0, size=(1366,768))
     display.start()
     # chrome_options = webdriver.ChromeOptions()
     # chrome_options.add_argument("start-maximized")
@@ -63,14 +64,17 @@ def init_driver():
     # chrome_options.add_argument('--disable-extensions')
     # driver = webdriver.Chrome(executable_path=chrome_driver, chrome_options=chrome_options)
     #----------------Firefox--------------
+    cap = DesiredCapabilities().FIREFOX
+    cap["marionette"] = False
+
     firefox_options = webdriver.FirefoxOptions()
-    firefox_options.add_argument("start-maximized")
+    #firefox_options.add_argument("start-maximized")
     firefox_options.add_argument("--headless")
-    firefox_options.add_argument('--disable-gpu')
-    firefox_options.add_argument('--no-sandbox')
-    firefox_options.add_argument("--disable-setuid-sandbox")
-    firefox_options.add_argument('--disable-extensions')
-    driver = webdriver.Firefox(executable_path=gecko_driver, firefox_options=firefox_options)
+    #firefox_options.add_argument('--disable-gpu')
+    #firefox_options.add_argument('--no-sandbox')
+    #firefox_options.add_argument("--disable-setuid-sandbox")
+    #firefox_options.add_argument('--disable-extensions')
+    driver = webdriver.Firefox(capabilities=cap, executable_path=gecko_driver, firefox_options=firefox_options)
     #-------------------------------------
     driver.wait = WebDriverWait(driver, 5)
     return driver
@@ -98,7 +102,7 @@ def log_in(driver, username, pw):
 click_icons(icon_ids)
 Clicks through the all the icons and initiates the data collection
 '''
-def click_icons(icon_ids, driver):
+def click_icons(icon_ids):
     global scrapeID
     icons = driver.find_elements_by_class_name("_1o7n")
     index =  0
@@ -111,7 +115,7 @@ def click_icons(icon_ids, driver):
             time.sleep(2)
             ts = datetime.datetime.now()
             category = icon_name(index)
-            get_trending(icon_ids[index], outer_list, outer_tab, category, ts, driver)
+            get_trending(icon_ids[index], outer_list, outer_tab, category, ts)
             index += 1
     scrapeID += 1
     return outer_list, outer_tab
@@ -120,7 +124,7 @@ def click_icons(icon_ids, driver):
 load_icon_html()
 Clicks through the icons to load the HTML element for each Trending Topic category
 '''
-def load_icon_html(driver):
+def load_icon_html():
     WebDriverWait(driver, 100).until(lambda driver: driver.find_element_by_class_name("_1o7n"))
     icons = driver.find_elements_by_class_name("_1o7n")
     top = icons[0]
@@ -137,7 +141,7 @@ def load_icon_html(driver):
 get_icon_id()
 Gets the Icon IDs for Trending Topic's Categories
 '''
-def get_icon_id(driver):
+def get_icon_id():
     classes = driver.find_elements_by_class_name("_5my7")
     icon_ids = []
     for c in classes:
@@ -172,6 +176,7 @@ Hovers over element i
 '''
 def hover(i):
     hover = ActionChains(driver).move_to_element(i)
+    driver.get_screenshot_as_file('/home/ec2-user/selenium_env/google.png')
     hover.perform()
 
 '''
@@ -242,7 +247,7 @@ get_trendings(id, outer_list, outer_tab, category, ts)
 Gets trending and tabs information.
 Note: new_tab() is called in this function
 '''
-def get_trending(id, outer_list, outer_tab, catergory, ts, driver):
+def get_trending(id, outer_list, outer_tab, catergory, ts):
     WebDriverWait(driver, 100).until(lambda driver: driver.find_element_by_class_name("_5myl"))
     current = driver.find_element_by_id(id)
     box = current.find_element_by_class_name("_5myl")
@@ -264,9 +269,10 @@ def get_trending(id, outer_list, outer_tab, catergory, ts, driver):
         temp_list.append(ts)
         temp_list.append(source.text[2:])
         outer_list.append(temp_list)
+        if count == 1:
+            single_tab = new_tab(link, catergory, scrapeID, ts)
+            outer_tab.append(single_tab)
         count += 1
-        single_tab = new_tab(link, catergory, scrapeID, ts)
-        outer_tab.append(single_tab)
     return outer_list, outer_tab
 
 '''
@@ -277,16 +283,17 @@ def scrape_job():
     print(datetime.datetime.now())
     time.sleep(5)
     driver.refresh()
-    load_icon_html(driver)
+    load_icon_html()
     time.sleep(2)
-    icon_ids = get_icon_id(driver)
+    icon_ids = get_icon_id()
     list_of_list, list_of_tab = click_icons(icon_ids)
     with db.cursor() as cursor:
         sql_trends = "INSERT INTO TRENDS_ONLY_CLOUD(Category, Title, Description, TrendLink, Ranking, ScrapeID, TS, Source)  VALUES (%s, %s, %s, %s, %s, %s, %s,%s)"
         cursor.executemany(sql_trends, list_of_list)
-        sql_tabs = "INSERT INTO TABS(TS, ScrapeID, Category, Ranking, Title, Source, PublishedDate, TimeSince, Description, URL)  VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"
+        sql_tabs = "INSERT INTO TABS_CLOUD(TS, ScrapeID, Category, Ranking, Title, Source, PublishedDate, TimeSince, Description, URL)  VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"
         cursor.executemany(sql_tabs, list_of_tab)
     db.commit()
+    print("----------------------finished one scrape------------------------------")
 
 if __name__ == "__main__":
     driver = init_driver()
