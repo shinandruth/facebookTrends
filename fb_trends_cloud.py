@@ -41,8 +41,8 @@ per_unit = int(config[config_type]["INTERVAL"])
 filename = config[config_type]["FILENAME"]
 #--------------------------------DB Connection---------------------------------
 db = pymysql.connect(host="fb-scrape-db.c0lrs8fl8ynt.us-east-2.rds.amazonaws.com",
-                     user="cjldbmaster",
-                     password="WR3QZGVaoHqNXAF",
+                     user="",
+                     password="",
                      db="fb_scrape_db",
                      charset="utf8mb4")
 cursor = db.cursor()
